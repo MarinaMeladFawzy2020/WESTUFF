@@ -1,0 +1,175 @@
+<header>
+    <app-header></app-header>
+</header>
+
+<!-- edit Questionnaire section -->
+<section>
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 m-auto">
+                    <div class="bg-white p-4 my-5">
+                        <div *ngIf="serviceError" class="alert alert-danger" #divErrorfocus>
+                            {{errorMsg}}
+                        </div>
+                        <div *ngIf="actionDone" class="alert alert-success" #divfocus>
+                            {{returnedMsg}}
+                        </div>
+
+                        <form [formGroup]="myGroup">
+                            <h2 class="mb-4">Edit Survey</h2>
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <mat-form-field class="col-md-12 px-0">
+                                        <mat-label>Title</mat-label>
+                                        <input matInput formControlName="title" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <mat-form-field class="col-md-12 px-0">
+                                        <mat-label>Description</mat-label>
+                                        <textarea matInput rows="7" cols="7" formControlName="description" required></textarea>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                     <mat-form-field class="col-md-12 px-0">
+                                        <mat-label>Publish Date</mat-label>
+                                        <input matInput  formControlName="publishDate" type="datetime-local" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="col-md-12 px-0">
+                                        <mat-label>Expiry Date</mat-label>
+                                        <input matInput  formControlName="expiryDate" type="datetime-local" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <mat-slide-toggle name="active" formControlName="active">Active</mat-slide-toggle>
+                                </div>
+                                <!-- <div class="col-12 mb-3">
+                                    <mat-slide-toggle name="overallFeedback" formControlName="overallFeedback">OverAll FeedBack</mat-slide-toggle>
+                                </div> -->
+                            </div>
+
+                            <div class="row mt-5">
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary mr-3 px-4" [disabled]="!submittable" (click)="EditSurvey()">Submit</button>
+                                    <button type="reset" class="btn btn-outline-primary px-4" (click)="resetForm()">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+<!-- Questions List section -->
+<section>
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+
+    
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 m-auto">
+                    <div class="bg-white p-4 mb-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h2>Survey List</h2>
+                            <button class="btn btn-primary" (click)="openDialog(true)">Add</button>
+                        </div>
+
+                        
+                        <mat-form-field>
+                            <mat-label>Filter</mat-label>
+                            <input matInput (keyup)="applyFilter($event)">
+                        </mat-form-field>
+                    
+                        
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Number</th>
+                                        <!-- <th>Id</th> -->
+                                        <th>Title</th>
+                                        <th>Has FeedBack</th>
+                                        <th>Actions</th>
+                                        <!-- <th>Reset Password</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of dataSource; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <!-- <td>{{data.id}}</td> -->
+                                        <td>{{data.title}}</td>
+                                        <td>{{data.hasFeedback}}</td>
+                                        <td>
+                                            <button type="button" data-toggle="modal" class="btn text-primary p-0 mr-3" (click)="openDialog(false,data.id)">
+                                                <i class="fa fa-edit fa-20px"></i>
+                                            </button>
+                                                    
+                                            <button type="button" data-toggle="modal" data-target="#myModal" class="btn text-danger p-0" (click)="selectedDeleteRow(data)">
+                                                <i class="fa fa-trash fa-20px"></i>
+                                            </button>
+                                        </td>
+                                        <!-- <td>
+                                            <a  title="Reset Password" class="m-1 text-primary" data-toggle="modal"
+                                                data-target="#ResetPasswordModal" (click)="selectedRPRow(data)">
+                                                <span class="fa-passwd-reset fa-stack">
+                                                    <i class="fa fa-undo fa-stack-2x"></i>
+                                                    <i class="fa fa-lock fa-stack-1x"></i>
+                                                </span>
+                                            </a>
+                                        </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+                                No data available
+                            </div>
+
+                            <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)">
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--  Modal Delete -->
+        <div class="modal" id="myModal" #modal>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <p>Are you sure you want to delete this account ?</p> -->
+                    <p class="m-0 py-4 px-2 text-center fa-20px">{{modalMsg}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary px-3 mr-2" data-dismiss="modal" (click)="deleteSelectedRow()">Confirm</button>
+                    <button type="button" class=" btn btn-outline-primary px-3" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+        </div>
+</section>

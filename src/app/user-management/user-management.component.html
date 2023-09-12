@@ -1,0 +1,4 @@
+<app-header></app-header>
+
+<app-branch-manager *ngIf="add" (added)="onAdded($event)"></app-branch-manager>
+<app-user-list *ngIf="view"  ></app-user-list>

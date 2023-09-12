@@ -1,0 +1,5 @@
+<app-header></app-header>
+<app-add-questionnaire *ngIf="add" (added)="onAdded($event)"></app-add-questionnaire>
+<app-questionnaire-list *ngIf="view"></app-questionnaire-list>
+<br>
+ <app-questionnaire-statistics *ngIf="viewstat" ></app-questionnaire-statistics>

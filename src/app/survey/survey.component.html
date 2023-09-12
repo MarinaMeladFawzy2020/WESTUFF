@@ -1,0 +1,10 @@
+
+<app-header></app-header>
+<!-- <app-add-survey ></app-add-survey>
+<app-survey-list ></app-survey-list>
+<br>
+ <app-survey-statistics  ></app-survey-statistics> -->
+ <app-add-survey *ngIf="add" (added)="onAdded($event)"></app-add-survey>
+ <app-survey-list *ngIf="view"></app-survey-list>
+ <br>
+  <app-survey-statistics *ngIf="viewstat" ></app-survey-statistics>

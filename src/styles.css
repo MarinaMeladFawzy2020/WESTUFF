@@ -1,0 +1,103 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: AvantGardeBT !important;
+    background-color: #ebebeb;
+}
+
+.page-loader{
+    z-index: 100;
+}
+
+.menu-dropdown .dropdown-toggle{
+    color: #808080;
+    font-size: 15px !important;
+}
+.menu-dropdown .dropdown-toggle::after{
+    filter: grayscale(1);
+}
+.menu-dropdown .dropdown-menu{
+    top: calc(100% - 20px);
+}
+
+.menu-dropdown .dropdown-menu .dropdown-item{
+    font-size: 15px;
+}
+
+.fa-20px{
+    font-size: 20px;
+}
+
+.word-overflow{
+    max-width: 100px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+/* mat-dialog-content */
+.mat-dialog-content{
+    max-height: initial !important;
+}
+.mat-dialog-content .mat-card-content{
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+
+/* mat table */
+.mat-table .mat-row .mat-cell{
+    background: transparent;
+}
+
+.mat-table .mat-row .mat-cell .row{
+    box-shadow: none;
+    justify-content: flex-start;
+    background-color: #ebebeb;
+    border-radius: 0px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.mat-table .mat-row .mat-cell .mat-list{
+    width: 100%;
+}
+.mat-table .mat-row .mat-cell .mat-list .mat-subheader{
+    margin-top: 0px;
+    font-size: 18px;
+    height: auto;
+    color: black;
+}
+
+.mat-table .mat-row .mat-cell .mat-list .mat-list-item .mat-list-item-content .mat-list-text .mat-line{
+    font-size: 16px !important;
+}
+
+
+@media screen and (min-width: 992px){
+.navbar .navbar-brand {
+    margin-right: 16px;
+}
+}
+
+
+.mat-input-element:disabled,
+.mat-form-field-type-mat-native-select.mat-form-field-disabled
+.mat-form-field-infix::after {
+  color: rgb(0 0 0 / 50%);
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-label {
+  color: rgb(0 0 0 / 55%);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label{
+  transform: translateY(-1.34375em) scale(0.75);
+  font-size: 16px;
+
+}

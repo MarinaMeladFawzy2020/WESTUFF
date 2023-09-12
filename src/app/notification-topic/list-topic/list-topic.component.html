@@ -1,0 +1,109 @@
+<section>
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 m-auto">
+                    <div class="bg-white p-4 mb-5">
+                        <h2 class="mb-3">All Topics</h2>
+
+                        <mat-form-field>
+                            <mat-label>Filter</mat-label>
+                            <input matInput (keyup)="applyFilter($event)">
+                        </mat-form-field>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <!-- <th>Id</th> -->
+                                        <th>English Name</th>
+                                        <th>Arabic Name</th>
+                                        <th>Icon</th>
+                                        <th>Is Active</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of dataSource">
+                                        <td>{{data.englishName}}</td>
+                                        <td>{{data.arabicName}}</td>
+                                        <td>
+                                            <img class="img-thumbnail" [src]="data.iconMediaName" alt="image" width="100" height="100" /> 
+                                        </td>
+                                        <td>{{data.active}}</td>
+                                        <td>
+                                            <button type="button" data-toggle="modal" class="btn text-primary p-0 mr-3" [disabled]="checkPredefinedTopics(data.englishName)"  (click)="getTopicDetail(data)">
+                                                <i class="fa fa-edit fa-20px"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                
+                            <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+                                No data available
+                            </div>
+                
+                            <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)"></mat-paginator>
+                        </div>
+
+                        <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#EditTopicsModel" #openModalButton>Open Modal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit -->
+    <div class="modal" id="EditTopicsModel" #EditTopicsModel>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0 font-weight-bold">Edit Topic</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form [formGroup]="myGroup">
+                <div class="modal-body p-3">
+                   <div class="container">
+                        <p *ngIf="errorUpdateTopics" class=" alert alert-danger">{{msgUpdateTopics}}</p>
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <mat-form-field class="col-md-12 px-0">
+                                    <mat-label>English Name</mat-label>
+                                    <input matInput formControlName="englishName" required >
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <mat-form-field class="col-md-12 px-0">
+                                    <mat-label>Arabic Name</mat-label>
+                                    <input matInput formControlName="arabicName" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <mat-slide-toggle name="active" formControlName="active">Active</mat-slide-toggle>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary px-3 mr-2" (click)="updateTopic()">
+                        <span [hidden]="updateTopic" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="sr-only">Loading...</span>
+                        Edit
+                    </button>
+                    <button type="button" class="btn btn-outline-primary px-3" data-dismiss="modal" #closeModal>Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</section>

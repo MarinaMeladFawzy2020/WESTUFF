@@ -1,0 +1,156 @@
+<section>
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 m-auto">
+                    <div class="bg-white p-4 my-5">
+                        <div *ngIf="serviceError" class="col-12 alert alert-danger" #divErrorfocus>
+                            {{errorMsg}}
+                        </div>
+                        <div *ngIf="actionDone" class="col-12 alert alert-success" #divfocus>
+                            {{returnedMsg}}
+                        </div>
+
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h2>Voting List</h2>
+                                <button class="btn px-3 btn-primary" (click)="openDialog(true)">Add</button>
+                            </div>
+
+                            <mat-form-field>
+                                <mat-label>Filter</mat-label>
+                                <input matInput (keyup)="applyFilter($event)">
+                            </mat-form-field>
+                       
+                            <div class="table-responsive">
+                                <table class="table">
+                      
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <!-- <th>Number</th> -->
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Added Date</th>
+                                            <th>Expiration Date</th>
+                                            <th>Created by</th>
+                                            <th>Publish Date</th>
+                                            <th>Active</th>
+                                            <th>Published</th>
+                                            <th>Activation</th>
+                                            <th>Actions</th>
+                                            <!-- <th>Reset Password</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of dataSource; let i = index">
+                                          <!-- <td>{{i+1}}</td> -->
+                                            <td>{{data.title}}</td>
+                                            <td>{{data.description}}</td>
+                                            <td>{{data.addingDate |date : 'short' }}</td>
+                                            <td>{{data.expiryDate |date : 'short'}}</td>
+                                            <td>{{data.createdBy}}</td>
+                                            <td>{{data.publishDate |date : 'short'}}</td>
+                                            <td>{{data.active}}</td>
+                                            <td>{{data.published}}</td>
+                                            <td>
+                                                <a title="Activate" data-toggle="modal" data-target="#ActivateDeactivateModal">
+                                                    <mat-checkbox color="primary" [checked]=data.active #C (click)="selectedCheckedRow(data,!C.checked)" ></mat-checkbox>
+                                                </a>
+                                                <!-- <i class="fa fa-key"></i></a> -->
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <button type="button" class="btn text-primary p-0 mr-3" (click)="viewAllQuestions(data)">
+                                                        View Details
+                                                      </button>
+                                                    <button type="button" class="btn text-primary p-0 mr-3" data-toggle="modal" (click)="openDialog(false,data.id,data)">
+                                                        <i class="fa fa-edit fa-20px"></i>
+                                                    </button>
+                                                    <button type="button" class="btn text-danger p-0" data-toggle="modal" data-target="#myModal" (click)="selectedDeleteRow(data)">
+                                                        <i class="fa fa-trash fa-20px"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                          
+                                            <!-- <td>
+                                                <a  title="Reset Password" class="m-1 text-primary" data-toggle="modal"
+                                                    data-target="#ResetPasswordModal" (click)="selectedRPRow(data)">
+                                                    <span class="fa-passwd-reset fa-stack">
+                                                        <i class="fa fa-undo fa-stack-2x"></i>
+                                                        <i class="fa fa-lock fa-stack-1x"></i>
+                                                    </span>
+                                                </a>
+                                            </td> -->
+                      
+                                        </tr>
+                                    </tbody>
+                                </table>
+                      
+                                <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+                                    No data available
+                                </div>
+
+                                <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)">
+                                </mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Modal Delete -->
+    <div class="modal" id="myModal" #modal>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <p>Are you sure you want to delete this account ?</p> -->
+                <p class="m-0 py-4 px-2 text-center fa-20px">{{modalMsg}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary px-3 mr-2" data-dismiss="modal" (click)="deleteSelectedRow()">Confirm</button>
+                <button type="button" class=" btn btn-outline-primary px-3" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+<!--  Modal Deactivate -->
+<div class="modal" id="ActivateDeactivateModal" #modal>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <h4 class="font-weight-bold mb-0">{{modalHeaderMsg}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <p>Are you sure you want to delete this account ?</p> -->
+                <p class="m-0 py-4 px-2 text-center fa-20px">{{modalMsg}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary px-3 mr-2" data-dismiss="modal" (click)="ActivateDeactivateSelectedRow()">Confirm</button>
+                <button type="button" class=" btn btn-outline-primary px-3" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</section>

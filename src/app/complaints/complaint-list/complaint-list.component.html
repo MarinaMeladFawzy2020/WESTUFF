@@ -1,0 +1,91 @@
+<section>
+  <div class="page-loader" [hidden]="dataLoaded">
+      <div class="spinner-grow text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+      </div>
+  </div>
+
+<app-complaint-search (getResponse)="getEventEmitterSearch($event)"></app-complaint-search>
+  <div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 m-auto">
+                <div class="bg-white p-4 my-5">
+                    <div *ngIf="serviceError" class="col-12 alert alert-danger" #divErrorfocus>
+                        {{errorMsg}}
+                    </div>
+                    <div *ngIf="actionDone" class="col-12 alert alert-success" #divfocus>
+                        {{returnedMsg}}
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center ">
+                            <h2>Complaint List</h2>
+                        </div>
+
+                        <mat-form-field>
+                            <mat-label>Filter by</mat-label>
+                            <input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterValue">
+                        </mat-form-field>
+
+                        <div class="table-responsive">
+                            <table class="table">
+
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>employeeId</th>
+                                        <th>employeeName</th>
+                                        <th>nationalId</th>
+                                        <th>phoneNumber</th>
+                                        <th>exchangeName</th>
+                                        <th>complaintText</th>
+                                        <th>creationdate</th>
+                                        <th>statusId</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of dataSource; let i = index">
+                                        <td>{{data.employeeId}}</td>
+                                        <td>{{data.employeeName}}</td>
+                                        <td>{{data.nationalId}}</td>
+                                        <td>{{data.phoneNumber}}</td>
+                                        <td>{{data.exchangeName}}</td>
+                                        <td>{{data.complaintText}}</td>
+                                        <td>{{data.creationdate  | date : 'short'}}</td>
+                                        <td><span class="status" [ngClass]="data.statusId === 1 ? 'status-open' :  data.statusId === 2 ? 'status-progress' :  data.statusId === 3 ?'status-close' :''">
+                                        {{ data.statusId === 1 ? 'Open' :
+                                           data.statusId === 2 ? 'In Progress' :
+                                           data.statusId === 3 ? 'Close' : ''  }}</span>
+                                      </td>
+
+                                        <td>
+                                            <div class="d-flex">
+                                                <button type="button"  [disabled]="data.statusId == 3"
+                                                 class="btn text-primary p-0 mr-3" title="Edit Complaint"  (click)="editComplaint(data)">
+                                                    <i class="fa fa-edit fa-20px"></i>
+                                                </button>
+
+                                            </div>
+                                        </td>
+
+
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+                                No Data Available
+                            </div>
+
+                            <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)">
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</section>

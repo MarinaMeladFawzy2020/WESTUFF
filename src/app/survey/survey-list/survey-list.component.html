@@ -1,0 +1,142 @@
+
+<section>
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 m-auto">
+                    <div class="bg-white p-4 mb-5">
+                        <h2 class="mb-3">Survey List</h2>
+
+                         <!-- <mat-form-field appearance="fill">
+                                <mat-label>Select an option</mat-label>
+                                <mat-select [(value)]="selected">
+                                <mat-option>None</mat-option>
+                                <mat-option value="option1">Option 1</mat-option>
+                                <mat-option value="option2">Option 2</mat-option>
+                                <mat-option value="option3">Option 3</mat-option>
+                                </mat-select>
+                            </mat-form-field> -->
+
+                            <!-- <div class="column col-md-4 px-3"
+                            style="width: 250px;padding-right:25px;  padding-bottom: 25px;padding-top: 25px;">
+
+                            <ngx-select-dropdown [config]="config" [options]="Modules" (change)="selectionChanged($event)">
+                            </ngx-select-dropdown>
+                            </div> -->
+                        <mat-form-field>
+                            <mat-label>Filter</mat-label>
+                            <input matInput (keyup)="applyFilter($event)">
+                        </mat-form-field>
+                    
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <!-- <th>Id</th> -->
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <!-- <th>Adding Date</th> -->
+                                        <th>Publish Date</th>
+                                        <th>Expiry Date</th>
+                                        <th>Created By</th>
+                                         <th>Is Publish</th> 
+                                         <th>Activation</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of dataSource">
+                                        <!-- <td>{{data.id}}</td> -->
+                                        <td>{{data.title}}</td>
+                                        <td>{{data.description}}</td>
+                                        <!-- <td>{{data.addingDate |date : 'short'}}</td> -->
+                                        <td>{{data.publishDate |date : 'short'}}</td>
+                                        <td>{{data.expiryDate|date : 'short'}}</td>
+                                        <td>{{data.createdBy}}</td>
+                                        <td>{{data.published}}</td>
+                                        <td>
+                                            <a title="Activate" data-toggle="modal" data-target="#ActivateDeactivateModal">
+                                                <mat-checkbox color="primary" [checked]=data.active #C (click)="selectedCheckedRow(data,!C.checked)" ></mat-checkbox>
+                                            </a>
+                                            <!-- <i class="fa fa-key"></i></a> -->
+                                        </td> 
+                                        <td class="d-flex">
+                                            <button type="button" class="btn text-primary p-0 mr-3" (click)="viewAllSurvey(data)">
+                                                View Details
+                                            </button>
+                                            <button type="button" data-toggle="modal" class="btn text-primary p-0 mr-3" (click)="editSurvey(data)">
+                                                <i class="fa fa-edit fa-20px"></i>
+                                            </button>
+                                            <button type="button" data-toggle="modal" data-target="#myModal" class="btn text-danger p-0" (click)="selectedDeleteRow(data)">
+                                                <i class="fa fa-trash fa-20px"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                
+                            <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+                                No data available
+                            </div>
+                
+                            <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)">
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Modal Delete -->
+    <div class="modal" id="myModal" #modal>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <p>Are you sure you want to delete this account ?</p> -->
+                <p class="m-0 py-4 px-2 text-center fa-20px">{{modalMsg}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary px-3 mr-2" data-dismiss="modal" (click)="deleteSelectedRow()">Confirm</button>
+                <button type="button" class=" btn btn-outline-primary px-3" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+<!--  Modal Deactivate -->
+<div class="modal" id="ActivateDeactivateModal" #modal>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <h4 class="font-weight-bold mb-0">{{modalHeaderMsg}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <p>Are you sure you want to delete this account ?</p> -->
+                <p class="m-0 py-4 px-2 text-center fa-20px">{{modalMsg}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary px-3 mr-2" data-dismiss="modal" (click)="ActivateDeactivateSelectedRow()">Confirm</button>
+                <button type="button" class=" btn btn-outline-primary px-3" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</section>

@@ -1,0 +1,104 @@
+<section>
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 m-auto">
+                    <div class="bg-white p-4 mb-5">
+                        <h2 class="mb-3">All News</h2>
+
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-6 mb-3">
+                                <ngx-select-dropdown [config]="config" [options]="Modules" [multiple]="true" (change)="selectionChanged($event)"></ngx-select-dropdown>
+                            </div>
+                        </div>
+
+                        <mat-form-field>
+                            <mat-label>Filter</mat-label>
+                            <input matInput (keyup)="applyFilter($event)">
+                        </mat-form-field>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>title</th>
+                                        <th>Description</th>
+                                        <th>Image</th>
+                                        <th>Publish Date</th>
+                                        <th>News Date</th>
+                                        <th>Added Date</th>
+                                        <th>Created By</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of dataSource">
+                                        <td>{{data.title}}</td>
+                                        <td>{{data.description}}</td>
+                                        <td> 
+                                            <img class="img-thumbnail" [src]="data.mediaName" alt="image" width="100" height="100" /> 
+                                      
+                                        </td>
+                                        <td>{{data.publishDate}}</td>
+                                        <td>{{data.newsDate}}</td>
+                                        <td>{{data.addedDate}}</td>
+                                        <td>{{data.addedBy}}</td>
+                                        <td>
+                                            <div class="d-flex">
+                                                 <button type="button" class="btn text-primary p-0 mr-3" data-toggle="modal" (click)="openDialog(data.id,data)">
+                                                    <i class="fa fa-edit fa-20px"></i>
+                                                </button> 
+                                                <button type="button" data-toggle="modal" data-target="#myModal" class="btn text-danger p-0" (click)="selectedDeleteRow(data)">
+                                                    <i class="fa fa-trash fa-20px"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                
+                            <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+                                No data available
+                            </div>
+                
+                            <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)"></mat-paginator>
+                        </div>
+
+                        <!-- <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#EditTopicsModel" #openModalButton>Open Modal</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--  Modal Delete -->
+    <div class="modal" id="myModal" #modal>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <p>Are you sure you want to delete this account ?</p> -->
+                    <p class="m-0 py-4 px-2 text-center fa-20px">{{modalMsg}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary px-3 mr-2" data-dismiss="modal" (click)="deleteSelectedRow()">Confirm</button>
+                    <button type="button" class=" btn btn-outline-primary px-3" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+  
+</section>

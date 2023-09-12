@@ -1,0 +1,213 @@
+<main>
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status" [hidden]="dataLoaded">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <section>
+        <div class="col-md-12 align-self-center" style="padding-right: 150px;padding-left: 150px; padding-top: 25px;">
+            <div *ngIf="serviceError" class="col-md-6 alert alert-danger" #divErrorfocus>
+                {{errorMsg}}
+            </div>
+            <div *ngIf="actionDone" class="alert alert-success" #divfocus>
+                <strong> {{returnedMsg}}</strong>
+            </div>
+
+            <div [formGroup]="myGroup" style=" background:white;">
+                <h2 style="padding-left: 25px; padding-top: 25px;"><b>Assign Branch to {{branchManagerName}}</b> </h2>
+
+
+                <div style="padding-left: 25px; padding-right: 25px;">
+
+                    <div class="row" style="padding-left: 25px; padding-right: 25px;">
+                        <div class="column col-md-4 px-3"
+                            style="width: 250px;padding-right:25px;  padding-bottom: 25px;padding-top: 25px;">
+
+                            <ngx-select-dropdown [config]="config" [options]="branchListOptions"
+                                [formControl]="myGroup.controls['dataModel']" #dropdown>
+                            </ngx-select-dropdown>
+                        </div>
+
+                        <div class="column  col-md-4 px-3"
+                            style="width: 250px;padding-right:25px; padding-bottom: 25px;padding-top: 25px;">
+
+                            <fieldset
+                                style="display: block; padding-left: 10px; padding-right: 10px; border: 1px solid black; ">
+                                <legend style="padding-left: 25px;">Assign Roles:</legend>
+                                <mat-checkbox color="primary" class="row" *ngFor="let role of rolesList"
+                                    name="{{role.id}}" style="padding-left: 25px;" (change)="updateSome($event)" #C>
+                                    {{role.name}}</mat-checkbox>
+                            </fieldset>
+                            <!-- <fieldset style="display: block; padding-left: 10px; padding-right: 10px; border: 1px solid black; ">
+                                    <legend style="padding-left: 25px;">Assign Roles:</legend>
+                            <mat-checkbox color="primary" class="row" *ngFor="let role of rolesList" name="{{role.id}}" style="padding-left: 25px;"
+                                (change)="updateSome($event)" #C>{{role.name}}</mat-checkbox>
+                                </fieldset> -->
+
+                            <!-- </div> -->
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-12 pt-4 mt-4 px-3"
+                    style=" display: flex;  justify-content: flex-end;;padding-top: 10px;padding-bottom: 10px;">
+                    <div class="row col-md-6">
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block" [disabled]="!submittable"
+                                (click)="assignManagerToBranch()">Submit</button>
+                        </div>
+
+                        <div class="col-md-4 m-end-auto">
+                            <button type="reset" class="btn btn-outline-primary btn-block"
+                                (click)="resetForm()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <br>
+        <div class="col-md-12 align-self-center" style="padding-right: 150px;padding-left: 150px; ">
+
+
+            <div style=" background-color: white;padding-left: 25px; padding-right: 25px; ">
+                <mat-form-field>
+                    <mat-label>Filter</mat-label>
+                    <input matInput (keyup)="applyFilter($event)">
+                </mat-form-field>
+
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+
+                        <thead class="">
+                            <tr>
+                                <th>Branch Id</th>
+                                <th>Branch name</th>
+
+
+                                <th>Edit Roles</th>
+                                <th>Delete</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of dataSource">
+                                <td>{{data.id}}</td>
+                                <td>{{data.branchName}}</td>
+
+                                <td>
+                                    <a title="Edit Roles" data-toggle="modal" class="m-1 text-primary"
+                                        style="font-size: 19px;"  (click)="getBranchRoles(data)" ><i class="fa fa-edit"></i></a>
+                                </td>
+
+                                <td>
+                                    <a title="Delete" data-toggle="modal" data-target="#myModal"
+                                        class="m-1 text-danger" (click)="selectedDeleteRow(data)"><i class="fa fa-trash" style="font-size: 19px;"></i></a>
+                                </td>
+
+
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+                        No data available
+                    </div>
+
+                    <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#EditRolesModel" #openModalButton>Open Modal</button>
+
+                    <!--  Modal Delete -->
+                    <div class="modal" id="myModal" #modal>
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title ">Delete </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="padding-left: 10px;">
+                                    <!-- <p>Are you sure you want to delete this account ?</p> -->
+                                    <br>
+                                    <p>{{modalMsg}}</p>
+                                    <br>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger btn btn-primary btn-sm"
+                                        data-dismiss="modal" (click)="deleteSelectedRow()">Confirm</button>
+                                    <button type="button" class=" btn btn-outline-primary btn-sm"
+                                        data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- POPUP Deletion -->
+                    <!-- The Modal Popup -->
+                    <div class="modal" id="EditRolesModel" #EditRolesModel>
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                
+                                <div class="modal-header">
+                                    <h5 class="modal-title ">Edit Roles</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="padding-top:20px;">
+                                 
+                                    <div class="row" style="padding-left: 30px;">
+                                           <p *ngIf="errorUpdateRoles" class=" alert alert-danger">{{msgUpdateRoles}}</p>
+                                    <!-- <p  class=" alert alert-danger">Message Hereeeeeeee</p> -->
+                                </div>
+                                    <div class="column  col-md-4 px-3"
+                            style="width: 250px;padding-right:25px; padding-bottom: 25px;padding-top: 10px; ">
+                            <div class="form-group" style="width: 250px;padding-right:25px; padding-bottom: 25px;padding-top: 25px; width: 250px;">
+                                <label for="recipient-name" style="font-weight: bold">Branch Name: {{branchName}}</label>
+                                
+                              </div>
+                            <fieldset
+                                style="width :250px; display: block; padding-left: 10px; padding-right: 10px; border: 1px solid black; ">
+                                <legend style="padding-left: 25px;">Assign Roles:</legend>
+                                <mat-checkbox color="primary" class="row" *ngFor="let assignedRole of assignedRolesList"
+                                    name="{{assignedRole.id}}" [checked]="assignedRole.flag" style="padding-left: 25px;" (change)="updateAssignedRoles($event)" >
+                                    {{assignedRole.name}}</mat-checkbox>
+                            </fieldset>
+
+                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger btn btn-primary btn-sm"
+                                         (click)="updateBranchRoles()">
+                                         <span [hidden]="updateRoles" class="spinner-border spinner-border-sm" role="status"
+                                         aria-hidden="true"></span>
+                                     <span class="sr-only">Loading...</span>
+            
+                                         Edit Roles</button>
+
+                                    <button type="button" class=" btn btn-outline-primary btn-sm"
+                                        data-dismiss="modal" #closeModal>Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)">
+                    </mat-paginator>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+    </section>
+</main>

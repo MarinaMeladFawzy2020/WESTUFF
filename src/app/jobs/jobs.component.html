@@ -1,0 +1,5 @@
+<header>
+    <app-header></app-header>
+</header>
+<app-add-jobs *ngIf="add" (added)="onAdded($event)" ></app-add-jobs>
+<app-list-jobs *ngIf="view" ></app-list-jobs>

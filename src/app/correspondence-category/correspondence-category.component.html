@@ -1,0 +1,6 @@
+<header>
+    <app-header></app-header>
+</header>
+<app-add-correspondence-category *ngIf="add" (added)="onAdded($event)"></app-add-correspondence-category>
+<app-list-correspondence-category *ngIf="view" ></app-list-correspondence-category>
+

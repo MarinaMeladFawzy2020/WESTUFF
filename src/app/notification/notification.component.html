@@ -1,0 +1,6 @@
+<header>
+    <app-header></app-header>
+</header>
+
+<app-send-notification *ngIf="add" (added)="onAdded($event)"></app-send-notification>
+<app-notification-list></app-notification-list>

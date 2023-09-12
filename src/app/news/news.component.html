@@ -1,0 +1,6 @@
+<header>
+    <app-header></app-header>
+</header>
+<app-add-news *ngIf="add" (added)="onAdded($event)"></app-add-news>
+<app-news-list *ngIf="view" ></app-news-list>
+

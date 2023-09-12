@@ -1,0 +1,141 @@
+<section>
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 m-auto">
+                    <div class="bg-white p-4 mb-5">
+                        <h2 class="mb-3">Users List</h2>
+
+                        <mat-form-field>
+                            <mat-label>Filter</mat-label>
+                            <input matInput (keyup)="applyFilter($event)">
+                        </mat-form-field>
+                    
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>name</th>
+                                        <th>UserName</th>
+                                        <th>Email</th>
+                                        <th>Mobile No.</th>
+                                        <th>Active</th>
+                                        <th>Actions</th>
+                                        <!-- <th>Reset Password</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of dataSource">
+                                        <td>{{data.name}}</td>
+                                        <td>{{data.userName}}</td>
+                                        <td>{{data.mail}}</td>
+                                        <td>{{data.mobileNumber}}</td>
+                                        <td>
+                                            <a title="Activate" data-toggle="modal" data-target="#ActivateDeactivateModal">
+                                                <mat-checkbox color="primary" [checked]=data.isActive #C (click)="selectedCheckedRow(data,!C.checked)" ></mat-checkbox>
+                                            </a>
+                                            <!-- <i class="fa fa-key"></i></a> -->
+                                        </td>
+                                        <td>
+                                            <button type="button" data-toggle="modal" class="btn text-primary p-0" (click)="editUser(data)">
+                                                <i class="fa fa-edit fa-20px"></i>
+                                            </button>
+                                        </td>
+                
+                                        <!-- <td>
+                                            <a  title="Reset Password" class="m-1 text-primary" data-toggle="modal"
+                                                data-target="#ResetPasswordModal" (click)="selectedRPRow(data)">
+                                                <span class="fa-passwd-reset fa-stack">
+                                                    <i class="fa fa-undo fa-stack-2x"></i>
+                                                    <i class="fa fa-lock fa-stack-1x"></i>
+                                                </span>
+                                            </a>
+                                        </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                
+                            <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+                                No data available
+                            </div>
+
+                            <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)">
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Modal Delete -->
+    <div class="modal" id="myModal" #modal>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <p>Are you sure you want to delete this account ?</p> -->
+                <p class="m-0 py-4 px-2 text-center fa-20px">{{modalMsg}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary px-3 mr-2" data-dismiss="modal" (click)="deleteSelectedRow()">Confirm</button>
+                <button type="button" class=" btn btn-outline-primary px-3" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!--  Modal Deactivate -->
+    <div class="modal" id="ActivateDeactivateModal" #modal>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between align-items-center">
+                    <h4 class="font-weight-bold mb-0">{{modalHeaderMsg}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <p>Are you sure you want to delete this account ?</p> -->
+                    <p class="m-0 py-4 px-2 text-center fa-20px">{{modalMsg}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary px-3 mr-2" data-dismiss="modal" (click)="ActivateDeactivateSelectedRow()">Confirm</button>
+                    <button type="button" class=" btn btn-outline-primary px-3" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Modal Reset Password -->
+    <div class="modal" id="ResetPasswordModal" #modal>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between align-items-center">
+                    <h4 class="font-weight-bold mb-0">Reset Password</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <p>Are you sure you want to delete this account ?</p> -->
+                    <p class="m-0 py-4 px-2 text-center fa-20px">{{modalMsg}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary px-3 mr-2" data-dismiss="modal" (click)="ResetPasswordSelectedRow()">Confirm</button>
+                    <button type="button" class=" btn btn-outline-primary px-3" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,5 @@
+<header>
+    <app-header></app-header>
+</header>
+<app-add-initiatives *ngIf="add" (added)="onAdded($event)"  ></app-add-initiatives>
+<app-list-initiatives *ngIf="view" ></app-list-initiatives>

@@ -1,0 +1,82 @@
+<section>
+  <div class="page-loader" [hidden]="dataLoaded">
+      <div class="spinner-grow text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+      </div>
+  </div>
+
+
+  <div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 m-auto">
+                <div class="bg-white p-4 my-5">
+                    <div *ngIf="serviceError" class="col-12 alert alert-danger" #divErrorfocus>
+                        {{errorMsg}}
+                    </div>
+                    <div *ngIf="actionDone" class="col-12 alert alert-success" #divfocus>
+                        {{returnedMsg}}
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h2>Category List</h2>
+                            <button class="btn px-3 btn-primary" (click)="openDialog(true)">Add Category</button>
+                        </div>
+
+                        <mat-form-field>
+                            <mat-label>Filter</mat-label>
+                            <input matInput (keyup)="applyFilter($event)">
+                        </mat-form-field>
+
+                        <div class="table-responsive">
+                            <table class="table">
+
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>English Name</th>
+                                        <th>Arabic Name</th>
+                                        <th>Added Date</th>
+                                        <th>isVisible</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of dataSource; let i = index">
+                                        <td>{{data.englishName}}</td>
+                                        <td>{{data.arabicName}}</td>
+                                        <td>{{data.addedDate  | date : 'short'}}</td>
+                                        <td>
+                                          <mat-checkbox color="primary" disabled [checked]="data.isVisible"  [value]="data.isVisible" ></mat-checkbox>
+                                        </td>
+
+                                        <td>
+                                            <div class="d-flex">
+                                              <button type="button" class="btn text-primary p-0 mr-3" title="Edit Complaint"  (click)="editComplaintCategory(data)">
+                                                <i class="fa fa-edit fa-20px"></i>
+                                            </button>
+
+                                            </div>
+                                        </td>
+
+
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+                                No Data Available
+                            </div>
+                            <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)">
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</section>

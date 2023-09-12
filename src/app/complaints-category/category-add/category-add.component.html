@@ -1,0 +1,119 @@
+
+<mat-dialog-content class="px-0">
+  <div fxFlex fxLayoutAlign="center center">
+    <mat-card class="p-0" fxFlex="100">
+      <form [formGroup]="mainForm"  (ngSubmit)="addNewCategoryFormSubmit()">
+
+      <div >
+      <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-3">
+        <mat-card-title class="mb-0 pl-3">Add New Category</mat-card-title>
+        <button type="button" class="close pr-3" (click)="dialogRef.close(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- content -->
+      <mat-card-content>
+
+        <div class="container">
+          <div class="col-md-12 mb-3">
+            <mat-form-field class="col-12 px-0">
+              <mat-label>English Name*</mat-label>
+              <input matInput  type="text" formControlName="englishName" placeholder="write..."
+              [class.is-invalid]="(mainForm.get('englishName')?.hasError('required'))&&(mainForm.get('englishName')?.dirty || mainForm.get('englishName')?.touched)" />
+             </mat-form-field>
+            <!-- <small class="text-danger" *ngIf="(mainForm.get('englishName')?.hasError('required'))&&(mainForm.get('englishName')?.dirty || mainForm.get('englishName')?.touched)"> Field is required. </small> -->
+          </div>
+
+          <div class="col-md-12 mb-3">
+            <mat-form-field class="col-12 px-0">
+              <mat-label>Arabic Name*</mat-label>
+              <input matInput  type="text" formControlName="arabicName" placeholder="write..."
+              [class.is-invalid]="(mainForm.get('arabicName')?.hasError('required'))&&(mainForm.get('arabicName')?.dirty || mainForm.get('arabicName')?.touched)" />
+             </mat-form-field>
+          </div>
+
+          <div class="col-md-12 mb-3">
+            <mat-checkbox color="primary"  formControlName="isVisible"  ></mat-checkbox>
+            <mat-label  class="ml-2">Is Visible</mat-label>
+          </div>
+        </div>
+
+         <!-- Sub Categories section -->
+          <div class="col-12 d-flex justify-content-between align-items-center mb-3">
+            <h3 class="text-dark-grey font-weight-bold">Sub Categories</h3>
+            <button type="button" class="btn text-danger w-auto" mat-icon-button (click)='addSubDataItem()'>
+              <mat-icon class="mr-1 fa-20px">add_box</mat-icon> Add Sub Categories
+            </button>
+          </div>
+
+          <!-- Sub Data Array -->
+          <div formArrayName="compliantSubCategories">
+            <div *ngFor="let subDataCtrl of subDataArray.controls; let i = index">
+              <div [formGroupName]="i">
+
+                <div  class="row col-md-12"  >
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field class="col-12 px-0">
+                      <mat-label>English Name*</mat-label>
+                      <input matInput  type="text" formControlName="englishName" placeholder="write..."
+                      [class.is-invalid]="(mainForm.get('englishName')?.hasError('required'))&&(mainForm.get('englishName')?.dirty || mainForm.get('englishName')?.touched)" />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <mat-form-field class="col-12 px-0">
+                      <mat-label>Arabic Name*</mat-label>
+                      <input matInput  type="text" formControlName="arabicName" placeholder="write..."
+                      [class.is-invalid]="(mainForm.get('arabicName')?.hasError('required'))&&(mainForm.get('arabicName')?.dirty || mainForm.get('arabicName')?.touched)" />
+                    </mat-form-field>
+                  </div>
+              </div>
+
+              <div  class="row col-md-12"  >
+                <div class="col-md-10 mb-3">
+                  <mat-checkbox color="primary"  formControlName="isVisible"  ></mat-checkbox>
+                  <mat-label  class="ml-2">Is Visible</mat-label>
+                </div>
+                <div class="col-md-2 " *ngIf="this.subDataArray.length > 1">
+                  <button class="btn btn-danger font-weight-bold" title="Delete" type="button" (click)='removeItem(i)'>X</button>
+                </div>
+              </div>
+              </div>
+              <hr style="margin: 5px 10px;">
+
+
+
+              </div>
+            </div>
+
+          <!-- <div class="row border-bottom align-items-center pb-2"  *ngFor="let subCategory of subCategories; let i = index">
+            <div class="col-lg-4 col-sm-6"  formGroupName="compliantSubCategories">
+              <mat-form-field class="col-12 px-0">
+                <input matInput placeholder="subCategory {{i+1}}" type="text" formControlName="englishName"
+                name="subCategory-{{i}}" [(ngModel)]="subCategory.englishName"  value="{{subCategory.englishName}}"  required>
+              </mat-form-field>
+            </div>
+          </div> -->
+
+
+
+
+    </mat-card-content>
+     <!-- </ng-container> -->
+
+    <div class="d-flex justify-content-end border-top pt-3 mt-3  pr-3">
+      <button type="submit" class="btn btn-primary mr-2" [disabled]="mainForm.invalid || submitLoaded">
+        <div class="spinner-border spinner-border-sm text-white mr-2" role="status" *ngIf="submitLoaded">
+          <span class="sr-only">Loading...</span>
+        </div>
+        Submit</button>
+      <button class="btn btn-outline-primary" type="button" (click)="dialogRef.close(false)">Cancel</button>
+    </div>
+   </div>
+  </form>
+
+   </mat-card>
+  </div>
+</mat-dialog-content>
+

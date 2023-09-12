@@ -1,0 +1,55 @@
+<main>
+<section>
+<div class="container">
+    <div class="row">
+
+                <div class="col-12 m-auto">
+
+                    <div class="bg-white p-4 mb-5">
+
+<section>
+    <h2 class="mb-4">All Medical Sheets</h2>
+
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)">
+    </mat-form-field>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <!-- <th>Id</th> -->
+                    <th>MedNetwork Name</th>
+                    <th>Added By</th>
+                    <th>Added Date</th>
+                    <!-- <th>Download</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataSource">
+                    <!-- <td>{{data.id}}</td> -->
+                    <td>{{data.medNetwork.name}}</td>
+                    <!-- <td>{{data.addingDate |date : 'short'}}</td> -->
+                    <td>{{data.addedBy}}</td>
+                    <td>{{data.addedDate |date : 'short'}}</td>
+                    <!-- <td><a [href]="data.fullPath">{{data.originalFileName}}</a></td> -->
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+            No data available
+        </div>
+
+        <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)">
+        </mat-paginator>
+    </div>
+</section>
+
+</div>
+    </div>
+    </div>
+    </div>
+</section>
+</main>

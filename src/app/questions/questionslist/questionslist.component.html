@@ -1,0 +1,76 @@
+<p>questionslist works!</p>
+
+<div class="col-md-12 align-self-center" style="padding-right: 150px;padding-left: 150px; ">
+
+
+    <div style=" background-color: white;padding-left: 25px; padding-right: 25px; ">
+      <h2 style="padding-left: 25px; padding-top: 25px;"><b>Questions List</b>
+      
+
+      </h2>
+  
+        <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)">
+        </mat-form-field>
+   
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+  
+                <thead class="">
+                    <tr>
+                      <th>Number</th>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Has FeedBack</th>
+                        <th>View</th>
+
+                        <!-- <th>Reset Password</th> -->
+  
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of dataSource; let i = index">
+                      <td>{{i+1}}</td>
+                        <td>{{data.id}}</td>
+                        <td>{{data.title}}</td>
+                        <td>{{data.hasFeedback}}</td>
+  
+  
+                       
+                        <td>
+                            <a title="View" data-toggle="modal" class="m-1 text-primary"
+                                style="font-size: 19px;" (click)="openDialog(false,data.id)"><i
+                                    class="fa fa-edit"></i></a>
+                        </td>
+                        <!-- <td>
+                            <a  title="Reset Password" class="m-1 text-primary" data-toggle="modal"
+                                data-target="#ResetPasswordModal" (click)="selectedRPRow(data)">
+                                <span class="fa-passwd-reset fa-stack">
+                                    <i class="fa fa-undo fa-stack-2x"></i>
+                                    <i class="fa fa-lock fa-stack-1x"></i>
+                                </span>
+                            </a>
+                        </td> -->
+  
+                    </tr>
+                </tbody>
+            </table>
+  
+            <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+                No data available
+            </div>
+  
+                 <!-- The Modal Popup -->
+  
+  
+            <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+  
+    
+  
+   
+  
+  </div>

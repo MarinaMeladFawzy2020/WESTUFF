@@ -1,0 +1,65 @@
+<section>
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <mat-dialog-content class="px-0">
+        <div fxFlex fxLayoutAlign="center center">
+            <mat-card class="p-0" fxFlex="95">
+                <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-3">
+                    <mat-card-title class="mb-0">Edit Corresspondence</mat-card-title>
+                    <button type="button" class="close" (click)="dialogRef.close(false)">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- content -->
+                <mat-card-content>
+                    <div class="container">
+                        <div [formGroup]="myGroup" class="row border-bottom pb-2 mb-4">
+                            <div class="col-12 ">
+                                <h3 class="text-dark-grey font-weight-bold mb-2">Corresspondence</h3>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <mat-form-field class="col-12 px-0">
+                                <mat-label>Title</mat-label>
+                                <input matInput [(ngModel)]="correspondenceDetailResponse.title" formControlName="title" name="title" required>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <mat-form-field class="col-12 px-0">
+                                <mat-label>Corresspondence Category Name</mat-label>
+                                <input matInput [(ngModel)]="correspondenceDetailResponse.correspondenceCategoryCustom.arabicName" formControlName="correspondenceCategoryName" name="correspondenceCategoryName" readonly="true">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-12 mb-3">
+                                <mat-slide-toggle  [(ngModel)]="correspondenceDetailResponse.isActive" formControlName="isActive" name="isActive">Active</mat-slide-toggle>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <a *ngIf="correspondenceDetailResponse.fileURL != '' or correspondenceDetailResponse.fileURL != null " [href]="correspondenceDetailResponse.fileURL" target="_blank">
+                                    <img  [src]="correspondenceDetailResponse.fileURL"  type="application/pdf"
+                                    frameBorder="0"
+                                    scrolling="auto"
+                                    height="90%"
+                                    width="90%"/> 
+                                </a>
+                                <p *ngIf="correspondenceDetailResponse.fileURL == '' or correspondenceDetailResponse.fileURL == null"> without file </p>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <input class="form-control" type="file"  (change)="onChange($event)"/> 
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <div class="d-flex justify-content-end border-top pt-3 mt-3">
+                    <button type="submit" class="btn btn-primary mr-2" (click)='submit()'>Submit</button>
+                    <button class="btn btn-outline-primary" type="button" (click)="dialogRef.close(false)">Cancel</button>
+                </div>
+            </mat-card>
+        </div>
+    </mat-dialog-content>
+</section>

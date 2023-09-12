@@ -1,0 +1,84 @@
+<header>
+  <app-header></app-header>
+</header>
+
+<section>
+  <div class="page-loader" [hidden]="dataLoaded">
+    <div class="spinner-grow text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 m-auto">
+          <div class="bg-white p-4 my-5">
+            <div *ngIf="serviceError" class="col-md-6 alert alert-danger" #divErrorfocus>
+              {{errorMsg}}
+            </div>
+            <div *ngIf="actionDone" class="alert alert-success" #divfocus>
+              {{returnedMsg}}
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2>Questions Statistics FeedBack</h2>
+              <a mat-raised-button href="javascript:void()" (click)="toggleTableRows()" color="primary">Toggle Rows</a>
+            </div>
+
+            <mat-form-field>
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)">
+            </mat-form-field>
+          
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+              <ng-container matColumnDef="order">
+                <th mat-header-cell *matHeaderCellDef>Order</th>
+                <td mat-cell *matCellDef="let element">{{dataSource.filteredData.indexOf(element)+1}} </td>
+              </ng-container>
+            
+              <ng-container matColumnDef="feedback">
+                <th mat-header-cell *matHeaderCellDef>FeedBack</th>
+                <td mat-cell *matCellDef="let element">
+                  <div class="word-overflow">{{element.textAnswer}}</div> 
+                </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                  <a mat-button href="javascript:void()" (click)="element.isExpanded = !element.isExpanded">
+                    View More
+                  </a>
+                </td>
+              </ng-container>
+            
+              <!-- Template for details row -->
+              <ng-container matColumnDef="expandedDetail"    >
+                <td mat-cell *matCellDef="let element" [attr.colspan]="displayedquestionsColumnsList.length">
+                  <div class="row student-element-detail" [@detailExpand]="element.isExpanded ? 'expanded' : 'collapsed'">
+                    <mat-list>
+                      <mat-list-item class="h-auto px-2 py-3">
+                        <div>{{element.textAnswer}}</div>
+                      </mat-list-item>
+                    </mat-list>
+                  </div>
+                </td>
+              </ng-container>
+            
+            
+              <tr mat-header-row *matHeaderRowDef="displayedquestionsColumnsList;sticky: true"></tr>
+              <tr mat-row *matRowDef="let element; columns: displayedquestionsColumnsList;" class="student-element-row"
+                [class.student-expanded-row]="element.isExpanded"></tr>
+            
+              <!-- Extra row to show detail content column -->
+              <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="student-detail-row"></tr>
+            </table>
+
+            <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)"></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>

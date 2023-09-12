@@ -1,0 +1,86 @@
+<section>
+
+  <div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 m-auto">
+                <div class="bg-white p-4 ">
+                  <h2>Advanced Search</h2>
+
+                  <form [formGroup]="searchForm"  (ngSubmit)="searchSubmit()">
+                    <div class="row col-md-12 " style="margin: 0; padding: 0;">
+                      <div class="col-md-12 mb-3">
+
+                        <div class="row col-md-12 " style="margin: 0; padding: 0;">
+
+                          <div class="col-md-2 mb-3">
+                            <mat-form-field class="col-12 px-0">
+                              <mat-label>Id</mat-label>
+                              <input matInput formControlName="id" type="number" placeholder="write..."  />
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-2 mb-3">
+                            <mat-form-field class="col-12 px-0">
+                              <mat-label>Status</mat-label>
+                              <mat-select matInput class="form-select form-h-42" formControlName="statusId" placeholder="select..."  >
+                                <mat-option value="">Select</mat-option>
+                                <mat-option value="1">Open</mat-option>
+                                <mat-option value="2">In Progress</mat-option>
+                                <mat-option value="3">Closed</mat-option>
+                              </mat-select>
+
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-md-2 mb-2">
+                            <mat-form-field class="col-12 px-0">
+                              <mat-label>Category ID</mat-label>
+                              <input matInput formControlName="CategoryId" type="text" placeholder="write..." />
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-md-2 mb-2">
+                            <mat-form-field class="col-12 px-0">
+                              <mat-label>SubCategory ID</mat-label>
+                              <input matInput formControlName="SubCategoryId" type="text" placeholder="write..." />
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-md-2 mb-3">
+                            <mat-form-field class="col-12 px-0">
+                              <mat-label>Date From</mat-label>
+                              <input matInput  formControlName="dateFrom" type="datetime-local" >
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-md-2 mb-3">
+                            <mat-form-field class="col-12 px-0">
+                              <mat-label>Date To</mat-label>
+                              <input matInput  formControlName="dateTo" type="datetime-local" >
+                            </mat-form-field>
+                          </div>
+
+                        </div>
+
+
+
+
+                        <div class="d-flex justify-content-end border-top pt-3 mt-3  pr-3">
+                          <button type="submit" class="btn btn-primary mr-2" [disabled]="searchForm.invalid || submitLoaded">
+                            <div class="spinner-border spinner-border-sm text-white mr-2" role="status" *ngIf="submitLoaded">
+                              <span class="sr-only">Loading...</span>
+                            </div>
+                            Search</button>
+                          <button class="btn btn-outline-primary" type="button" (click)="reset()">Reset</button>
+                        </div>
+                      </div>
+                    </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</section>

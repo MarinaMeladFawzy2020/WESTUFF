@@ -1,0 +1,17 @@
+.status{
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.status-open{
+  background:rgb(0 255 58 / 35%);
+}
+
+.status-progress{
+  background: rgb(255 174 0 / 44%);
+}
+
+.status-close{
+  background: rgb(255 3 3 / 24%);
+}

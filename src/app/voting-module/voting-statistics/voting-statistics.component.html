@@ -1,0 +1,85 @@
+
+<section>
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 m-auto">
+                    <div class="bg-white p-4 mb-5">
+                        <h2 class="mb-3">Voting Participation Statistics</h2>
+
+                        <!-- <mat-form-field appearance="fill">
+                        <mat-label>Select an option</mat-label>
+                        <mat-select [(value)]="selected">
+                        <mat-option>None</mat-option>
+                        <mat-option value="option1">Option 1</mat-option>
+                        <mat-option value="option2">Option 2</mat-option>
+                        <mat-option value="option3">Option 3</mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+
+                    <!-- <div class="column col-md-4 px-3"
+                    style="width: 250px;padding-right:25px;  padding-bottom: 25px;padding-top: 25px;">
+
+                    <ngx-select-dropdown [config]="config" [options]="Modules" (change)="selectionChanged($event)">
+                    </ngx-select-dropdown>
+                </div> -->
+
+                    <mat-form-field>
+                        <mat-label>Filter</mat-label>
+                        <input matInput (keyup)="applyFilter($event)">
+                    </mat-form-field>
+                    
+                    <div class="table-responsive">
+                        <table class="table">
+
+                            <thead class="thead-light">
+                                <tr>
+                                    <!-- <th>Id</th> -->
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Adding Date</th>
+                                    <th>Publish Date</th>
+                                    <th>Expiry Date</th>
+                                    <th>Created By</th>
+                                    <th>Number Of Participants</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of dataSource">
+                                    <!-- <td>{{data.questionnaireid}}</td> -->
+                                    <td>{{data.title}}</td>
+                                    <td>{{data.description}}</td>
+                                    <td>{{data.addingDate|date : 'short'}}</td>
+                                    <td>{{data.publishDate|date : 'short'}}</td>
+                                    <td>{{data.expiryDate|date : 'short'}}</td>
+                                    <td>{{data.createdBy}}</td>
+                                    <td>{{data.numberOfParticipants}}</td>
+                                    <td>
+                                        <button type="button" class="btn text-primary p-0" (click)="viewAllQuestions(data)">
+                                            View Details
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+                            No data available
+                        </div>
+
+                        <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)">
+                        </mat-paginator>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

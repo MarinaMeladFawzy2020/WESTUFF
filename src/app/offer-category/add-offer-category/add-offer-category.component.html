@@ -1,0 +1,59 @@
+<section>
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 m-auto">
+                    <div class="bg-white p-4 my-5">
+                        <div *ngIf="serviceError" class="alert alert-danger" #divErrorfocus>
+                            {{errorMsg}}
+                        </div>
+                        <div *ngIf="actionDone" class="alert alert-success" #divfocus>
+                            {{returnedMsg}}
+                        </div>
+
+                        <form [formGroup]="myGroup">
+                            <h2 class="mb-4">Add Offer Category</h2>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="col-md-12 px-0">
+                                        <mat-label>English Name</mat-label>
+                                        <input matInput formControlName="englishName" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="col-md-12 px-0">
+                                        <mat-label>Arabic Name</mat-label>
+                                        <input matInput formControlName="arabicName" required>
+                                    </mat-form-field>
+                                </div>
+                                <!-- <div class="col-12 mb-3">
+                                    <mat-slide-toggle name="active" formControlName="active">Active</mat-slide-toggle>
+                                </div> -->
+                                <div class="col-lg-4 col-sm-6">
+                                    <input [formControl]="myGroup.controls['sheet']" accept='image/*' class="form-control" type="file" (change)="onChange($event)"> 
+                                </div>
+
+                                <div class="col-lg-3 col-8">
+                                    <img [src]="offerUrl" class="img-thumbnail" alt="answer-img" width="150" height="150" />
+                                </div>
+                            </div>
+
+                            <div class="row mt-5">
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary mr-3 px-4" [disabled]="!submittable" (click)="addTopic()">Submit</button>
+                                    <button type="reset" class="btn btn-outline-primary px-4" (click)="resetForm()">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

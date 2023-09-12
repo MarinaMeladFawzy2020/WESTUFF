@@ -1,0 +1,69 @@
+<mat-dialog-content class="px-0">
+    <div fxFlex fxLayoutAlign="center center">
+      <mat-card class="p-0" fxFlex="95">
+        <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-3">
+          <mat-card-title class="mb-0">Add / Edit Question</mat-card-title>
+          <button type="button" class="close" (click)="dialogRef.close(false)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  
+        <!-- content -->
+        <mat-card-content>
+          <div class="container">
+            <div class="row border-bottom pb-2 mb-4">
+              <div class="col-12 ">
+                <h3 class="text-dark-grey font-weight-bold mb-2">Questions</h3>
+              </div>
+              <div class="col-md-12 mb-3">
+                <mat-form-field class="col-md-12 px-0">
+                  <mat-label>Question</mat-label>
+                  <input matInput [(ngModel)]="question.title" required>
+                </mat-form-field>
+              </div>
+              <div class="col-md-12 mb-3">
+                <mat-form-field class="col-md-12 px-0">
+                  <mat-label>Short Description</mat-label>
+                  <textarea matInput rows="4" cols="4" [(ngModel)]="question.shortDescription" required></textarea>
+                </mat-form-field>
+              </div>
+              <!-- <div class="col-md-12 mb-3">
+                <mat-slide-toggle name="active" [(ngModel)]="question.hasFeedback">Has FeedBack</mat-slide-toggle>
+              </div> -->
+              <div class="col-md-12 mb-3">
+                <mat-slide-toggle name="isMultiSelect" [(ngModel)]="question.isMultiSelect">is Multi Select</mat-slide-toggle>
+              </div>
+              
+            </div>
+        
+            <!-- Answers section -->
+            <div class="row">
+              <div class="col-12 d-flex justify-content-between align-items-center mb-3">
+                <h3 class="text-dark-grey font-weight-bold">Answers</h3>
+                <button type="button" class="btn text-danger w-auto" mat-icon-button (click)='add()'>
+                  <mat-icon class="mr-1 fa-20px">add_box</mat-icon> Add Answer                
+                </button>
+              </div>
+            </div>
+  
+            <!-- Answers list -->
+            <div class="row border-bottom align-items-center pb-2" *ngFor="let answer of answers; let i = index">
+              <div class="col-lg-11 col-10">
+                <mat-form-field class="col-12 px-0">
+                  <input matInput placeholder="Answer {{i+1}}" type="text" name="Answer-{{i}}" [(ngModel)]="answer.answerTitle"  value="{{answer.answerTitle}}" required>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-1 col-2">
+                <button class="btn btn-grey font-weight-bold" type="button" (click)='removeInput(i)'>X</button>
+              </div>
+            </div>
+          </div>
+      </mat-card-content>
+  
+      <div class="d-flex justify-content-end border-top pt-3 mt-3">
+        <button type="submit" class="btn btn-primary mr-2" (click)='submit()'>Submit</button>
+        <button class="btn btn-outline-primary" type="button" (click)="dialogRef.close(false)">Cancel</button>
+      </div>
+     </mat-card>
+    </div>
+  </mat-dialog-content>

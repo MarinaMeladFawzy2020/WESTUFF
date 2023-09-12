@@ -1,0 +1,98 @@
+<section>
+  <div class="page-loader" [hidden]="dataLoaded">
+      <div class="spinner-grow text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+      </div>
+  </div>
+  <div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 m-auto">
+                <div class="bg-white p-4">
+                    <div *ngIf="serviceError" class="col-12 alert alert-danger" #divErrorfocus>
+                        {{errorMsg}}
+                    </div>
+                    <div *ngIf="actionDone" class="col-12 alert alert-success" #divfocus>
+                        {{returnedMsg}}
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2 class="mb-0"> Sub-Category List</h2>
+                        </div>
+                        <mat-form-field>
+                            <mat-label>Filter</mat-label>
+                            <input matInput (keyup)="applyFilter($event)">
+                        </mat-form-field>
+
+                        <div class="table-responsive">
+                            <table class="table">
+
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>English Name</th>
+                                        <th>Arabic Name</th>
+                                        <th>Added Date</th>
+                                        <th>isVisible</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of dataSource; let i = index">
+                                        <td>{{data.englishName}}</td>
+                                        <td>{{data.arabicName}}</td>
+                                        <td>{{data.addedDate  | date : 'short'}}</td>
+                                        <td>
+                                          <mat-checkbox color="primary" disabled [checked]="data.isVisible"  [value]="data.isVisible" ></mat-checkbox>
+                                        </td>
+
+
+                                        <td>
+                                            <div class="d-flex">
+                                                <button type="button" class="btn text-danger p-0" data-toggle="modal" data-target="#myModal" (click)="selectedDeleteRow(data)">
+                                                    <i class="fa fa-trash fa-20px"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+
+
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="py-4 text-center" *ngIf="dataSource && dataSource.length == 0">
+                                No Data Available
+                            </div>
+                            <mat-paginator #paginator [length]="dataLength" [pageSize]="pageLength" (page)="updatePage($event)">
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ <!--  Modal Delete -->
+ <div class="modal" id="myModal" #modal>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header border-0">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p class="m-0 py-4 px-2 text-center fa-20px">{{modalMsg}}</p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-primary px-3 mr-2" data-dismiss="modal" (click)="deleteSelectedRow()">Confirm</button>
+              <button type="button" class=" btn btn-outline-primary px-3" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+  </div>
+
+
+</section>

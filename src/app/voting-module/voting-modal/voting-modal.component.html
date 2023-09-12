@@ -1,0 +1,126 @@
+<mat-dialog-content class="px-0">
+  <div fxFlex fxLayoutAlign="center center">
+    <mat-card class="p-0" fxFlex="95">
+      <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-3">
+        <mat-card-title class="mb-0">Add / Edit Voting</mat-card-title>
+        <button type="button" class="close" (click)="dialogRef.close(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- content -->
+      <mat-card-content>
+        <div class="container">
+          <!-- voting section -->
+          <div class="row border-bottom pb-2 mb-4">
+            <div class="col-12 ">
+              <h3 class="text-dark-grey font-weight-bold mb-2">Voting</h3>
+            </div>
+            <div class="col-md-12 mb-3">
+              <mat-form-field class="col-12 px-0">
+                <mat-label>Title</mat-label>
+                <input matInput [(ngModel)]="voting.title" required>
+              </mat-form-field>
+            </div>
+            <div class="col-md-12 mb-3">
+              <mat-form-field class="col-12 px-0" >
+                  <mat-label>Description</mat-label>
+                  <!-- <input matInput formControlName="description" required /> -->
+                  <textarea matInput rows="7" cols="7" [(ngModel)]="voting.description" required ></textarea>
+              </mat-form-field>
+          </div>
+            <!-- <div class="col-md-6 mb-3">
+              <mat-form-field class="col-12 px-0">
+                <mat-label>Description</mat-label>
+                <input matInput [(ngModel)]="voting.description" required>
+              </mat-form-field>
+            </div> -->
+            <div class="col-md-6 mb-3">
+              <mat-form-field class="col-12 px-0">
+                <mat-label>Publish Date</mat-label>
+                <input matInput [(ngModel)]="voting.publishDate"  type="datetime-local" required>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6 mb-3">
+              <mat-form-field class="col-12 px-0">
+                <mat-label>Expiry Date</mat-label>
+                <input matInput [(ngModel)]="voting.expiryDate"  type="datetime-local" required>
+              </mat-form-field>
+            </div>
+            <div class="col-12 mb-3">
+              <mat-slide-toggle [(ngModel)]="voting.active" name="active" >Active</mat-slide-toggle>
+            </div>
+          </div>
+      
+          <!-- Answers section -->
+          <div class="row">
+            <div class="col-12 d-flex justify-content-between align-items-center mb-3">
+              <h3 class="text-dark-grey font-weight-bold">Answers</h3>
+              <button type="button" class="btn text-danger w-auto" mat-icon-button (click)='add()'>
+                <mat-icon class="mr-1 fa-20px">add_box</mat-icon> Add Answer                
+              </button>
+            </div>
+          </div>
+
+          <!-- Answers list -->
+          <!-- <ng-container *ngIf="showAnswer"> -->
+          <div class="row border-bottom align-items-center pb-2"  *ngFor="let answer of answers; let i = index">
+            <div class="col-lg-4 col-sm-6">
+              <mat-form-field class="col-12 px-0">
+                <input matInput placeholder="Answer {{i+1}}" type="text"
+                name="Answer-{{i}}" [(ngModel)]="answer.title"  value="{{answer.title}}"  required>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <mat-form-field class="col-12 px-0" >
+                  <mat-label>Description</mat-label>
+                  <!-- <input matInput formControlName="description" required /> -->
+                  <textarea matInput rows="4" cols="4" placeholder="Full Description" type="text"
+                  [(ngModel)]="answer.fullDescription"  value="{{answer.fullDescription}}"></textarea>
+              </mat-form-field>
+             </div>
+            <!-- <div class="col-lg-4 col-sm-6">
+              <mat-form-field class="col-12 px-0">
+                <input matInput placeholder="Full Description" type="text"
+                 [(ngModel)]="answer.fullDescription"  value="{{answer.fullDescription}}">
+              </mat-form-field>
+            </div> -->
+            
+            
+            <div class="col-lg-6 col-sm-6">
+              <label>Image</label>
+              <input class="form-control" type="file" accept='image/*' (change)="onChange($event,i)" /> 
+            </div>
+            <div class="col-lg-3 col-8">
+              <img [src]="answer.mediaUrl" class="img-thumbnail" alt="answer-img" width="100" height="100" />
+            </div>
+            
+            <!--For Video -->
+            
+            <div class="col-lg-6 col-sm-6">
+              <label>Video</label>
+              <input class="form-control" type="file" accept='video/*' (change)="onChangeVideo($event,i)" /> 
+            </div>
+            <div class="col-lg-3 col-8">
+              <video width="100" height="100"   controls disabled="true" #videoPlayer>   
+                <source [src]="answer.videoUrl" type="video/mp4">   
+              </video> 
+              <!-- <img [src]="answer.videoUrl" class="img-thumbnail" alt="answer-img" width="100" height="100" /> -->
+            </div>
+
+            <div class="col-lg-1 col-4">
+              <button class="btn btn-grey font-weight-bold" type="button" (click)='removeInput(i)'>X</button>
+            </div>
+          </div>
+        <!-- </ng-container> -->
+        </div>
+    </mat-card-content>
+
+    <div class="d-flex justify-content-end border-top pt-3 mt-3">
+      <button type="submit" class="btn btn-primary mr-2" (click)='submit()'>Submit</button>
+      <button class="btn btn-outline-primary" type="button" (click)="dialogRef.close(false)">Cancel</button>
+    </div>
+   </mat-card>
+  </div>
+</mat-dialog-content>

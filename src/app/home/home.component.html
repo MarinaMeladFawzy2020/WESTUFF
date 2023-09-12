@@ -1,0 +1,126 @@
+<header>
+    <app-header></app-header>
+</header>
+
+<main>
+    <!-- <img src="/assets/images/banner.png"  class="img-fluid"> -->
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mb-4 pt-5"  *ngFor="let box of countBoxes">
+            <div class="col-md-4">
+                <div class="dash-card bg-white shadow-sm mb-3">
+                    <div class="dash-icon">
+                        <div class="dash-img">
+                            <img src="assets/images/svg/newspaper-solid.svg" class="img-fluid" alt="dash-icon" />
+                        </div>
+                    </div>
+                    <div class="dash-content">
+                        <a class="nav-link" routerLink="/questionaire"><h4>Questionaire</h4></a>
+                        <h6>{{box.No_Of_Questionnaire}}</h6>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="dash-card bg-white shadow-sm mb-3">
+                    <div class="dash-icon">
+                        <div class="dash-img">
+                            <img src="assets/images/svg/clipboard-list-solid.svg" class="img-fluid" alt="dash-icon" />
+                        </div>
+                    </div>
+                    <div class="dash-content">
+                        <a class="nav-link" routerLink="/voting"><h4>Voting</h4></a>
+                        <h6>{{box.No_Of_Voting}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dash-card bg-white shadow-sm mb-3">
+                    <div class="dash-icon">
+                        <div class="dash-img">
+                            <img src="assets/images/svg/tasks-solid.svg" class="img-fluid" alt="dash-icon" />
+                        </div>
+                    </div>
+                    <div class="dash-content">
+                        <h4>Complaints</h4>
+                        <h6>{{box.No_Of_Complaint}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dash-card bg-white shadow-sm mb-3">
+                    <div class="dash-icon">
+                        <div class="dash-img">
+                            <img src="assets/images/svg/poll-h-solid.svg" class="img-fluid" alt="dash-icon" />
+                        </div>
+                    </div>
+                    <div class="dash-content">
+                        <a class="nav-link" routerLink="/survey"><h4>Survey</h4></a>
+                        <h6>{{box.No_Of_Survey}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dash-card bg-white shadow-sm mb-3">
+                    <div class="dash-icon">
+                        <div class="dash-img">
+                            <img src="assets/images/svg/users-solid.svg" class="img-fluid" alt="dash-icon" />
+                        </div>
+                    </div>
+                    <div class="dash-content">
+                        <h4>Customer</h4>
+                        <h6>{{box.No_Of_Customers}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dash-card bg-white shadow-sm mb-3">
+                    <div class="dash-icon">
+                        <div class="dash-img">
+                            <img src="assets/images/svg/file-alt-solid.svg" class="img-fluid" alt="dash-icon" />
+                        </div>
+                    </div>
+                    <div class="dash-content">
+                        <a class="nav-link" routerLink="/notification"><h4>Notifications</h4></a>
+                        <h6>{{box.No_Of_Notifications}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- chart notifications single col -->
+        <div class="bg-white shadow-sm p-3 mb-4" >
+            <h2 class="font-weight-bold mt-3 mb-4">Notifications Graph</h2>
+            <div [chart]="notificationsChart"></div>
+        </div>
+
+        <!-- chart questionnaire double col -->
+        <div class="bg-white shadow-sm p-3 mb-4">
+            <h2 class="font-weight-bold mt-3 mb-4">Questionnaire Graph</h2>
+            <div [chart]="questionnaireChart"></div>
+        </div>
+
+         <!-- chart voting double col -->
+        <div class="bg-white shadow-sm p-3 mb-4">
+            <h2 class="font-weight-bold mt-3 mb-4">Voting Graph</h2>
+            <div [chart]="votingChart"></div>
+        </div>
+
+
+         <!-- chart Survey double col -->
+         <div class="bg-white shadow-sm p-3 mb-4">
+            <h2 class="font-weight-bold mt-3 mb-4">Survey Graph</h2>
+            <div [chart]="surveyChart"></div>
+        </div>
+
+         <!-- chart Customer single col -->
+         <div class="bg-white shadow-sm p-3 mb-4" >
+            <h2 class="font-weight-bold mt-3 mb-4">Customer Registration</h2>
+            <div [chart]="customerChart"></div>
+        </div>
+    </div>
+</main>

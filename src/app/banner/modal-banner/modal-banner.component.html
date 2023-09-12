@@ -1,0 +1,78 @@
+<mat-dialog-content class="px-0">
+    <div fxFlex fxLayoutAlign="center center">
+      <mat-card class="p-0" fxFlex="95">
+        <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-3">
+          <mat-card-title class="mb-0">Edit Banner</mat-card-title>
+          <button type="button" class="close" (click)="dialogRef.close(false)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  
+        <!-- content -->
+        <mat-card-content>
+          <div class="container">
+            <!-- Banner section -->
+            <div [formGroup]="myGroup" class="row border-bottom pb-2 mb-4">
+              <div class="col-12 ">
+                <h3 class="text-dark-grey font-weight-bold mb-2">Banner</h3>
+              </div>
+              <div class="col-md-6 mb-3">
+                <mat-form-field class="col-12 px-0">
+                  <mat-label>Title</mat-label>
+                  <input matInput [(ngModel)]="banner.title" formControlName="title" required>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 mb-3">
+                <mat-form-field class="col-12 px-0">
+                  <mat-label>Banner Type Name</mat-label>
+                  <input matInput [(ngModel)]="banner.bannerTypeName" formControlName="bannerTypeName" required [readonly]="true">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 mb-3">
+                <mat-form-field class="col-12 px-0">
+                  <mat-label>Publish Date</mat-label>
+                  <input matInput [(ngModel)]="banner.publishDate" formControlName="publishDate" type="datetime-local" required>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 mb-3">
+                <mat-form-field class="col-12 px-0">
+                  <mat-label>Expiry Date</mat-label>
+                  <input matInput [(ngModel)]="banner.expiryDate" formControlName="expiryDate" type="datetime-local" required>
+                </mat-form-field>
+              </div>
+              <!-- <div class="col-md-6 mb-3">
+                <mat-form-field class="col-12 px-0">
+                  <mat-label>Item Id </mat-label>
+                  <input matInput [(ngModel)]="banner.itemId" required>
+                </mat-form-field>
+              </div> -->
+              <div class="col-md-6 mb-3">
+                <mat-form-field class="col-12 px-0">
+                  <mat-label>Order No</mat-label>
+                  <input matInput [(ngModel)]="banner.orderNo" formControlName="orderNo" required>
+                </mat-form-field>
+              </div>
+              <div class="col-12 mb-3">
+                <mat-slide-toggle [(ngModel)]="banner.active" formControlName="active" name="active" >Active</mat-slide-toggle>
+              </div>
+
+              <div class="col-lg-4 col-sm-6">
+                <input class="form-control" type="file" accept='image/*' (change)="onChange($event)" /> 
+              </div>
+              <div class="col-lg-3 col-8">
+                <img  [src]="banner.bannerMediaName" class="img-thumbnail" alt="img" width="100" height="100" />
+              </div>
+
+            </div>
+        
+
+          </div>
+      </mat-card-content>
+  
+      <div class="d-flex justify-content-end border-top pt-3 mt-3">
+        <button type="submit" class="btn btn-primary mr-2" [disabled]="!submittable" (click)='submit()'>Submit</button>
+        <button class="btn btn-outline-primary" type="button" (click)="dialogRef.close(false)">Cancel</button>
+      </div>
+     </mat-card>
+    </div>
+  </mat-dialog-content>

@@ -1,0 +1,7 @@
+<header>    
+    <app-header></app-header>
+</header>
+<br>
+<app-add-topic *ngIf="add" (added)="onAdded($event)"></app-add-topic>
+
+<app-list-topic></app-list-topic>

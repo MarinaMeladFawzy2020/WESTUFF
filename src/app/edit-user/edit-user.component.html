@@ -1,0 +1,105 @@
+<header>
+    <app-header></app-header>
+</header>
+
+<section>
+    <div class="page-loader" [hidden]="dataLoaded">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 m-auto">
+
+                    <!-- edit user information -->
+                    <div class="bg-white p-4 my-5">
+                        <div *ngIf="serviceError" class="alert alert-danger" #divErrorfocus>
+                            {{errorMsg}}
+                        </div>
+                        <div *ngIf="actionDone" class="alert alert-success" #divfocus>
+                            {{returnedMsg}}
+                        </div>
+
+                        <form [formGroup]="myGroup">
+                            <h2 class="mb-4">Edit User Info.</h2>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="col-md-12 px-0">
+                                        <mat-label>Name</mat-label>
+                                        <input matInput formControlName="name" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="col-md-12 px-0">
+                                        <mat-label>Username</mat-label>
+                                        <input matInput formControlName="username" required>
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="col-md-12 px-0">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput formControlName="email" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="col-md-12 px-0">
+                                        <mat-label>Mobile number</mat-label>
+                                        <input matInput formControlName="mobilenumber" maxlength="11" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row mt-5">
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary mr-3 px-4" [disabled]="!submittable" (click)="editUserInfo()">Edit</button>
+                                    <button type="button" class="btn btn-outline-primary px-4" [routerLink]="'/management'">Back</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- edit user roles -->
+                    <div class="bg-white p-4 mb-5">
+                        <div *ngIf="roleServiceError" class="col-12 alert alert-danger" #divErrorfocus>
+                            {{roleErrorMsg}}
+                        </div>
+                        <div *ngIf="roleActionDone" class="col-12 alert alert-success" #divfocus>
+                            {{roleReturnedMsg}}
+                        </div>
+
+                        <form [formGroup]="myGroupRoles">
+                            <h2 class="mb-4">Edit User Roles</h2>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <ngx-select-dropdown [config]="config" [options]="Modules"
+                                    (change)="selectionChanged($event)" [formControl]="myGroupRoles.controls['dataModel']" #dropdown>
+                                    </ngx-select-dropdown>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <fieldset class="px-2 border border-light-grey text-black-50">
+                                        <legend class="fa-20px pl-2 pb-1 font-weight-bold">Assign Roles:</legend>
+                                        <mat-checkbox color="primary" class="row pl-3" *ngFor="let role of rolesList"
+                                         name="{{role.id}}" [checked]= "roleSelected(role.id)" (change)="updateSome($event)" #CheckBoxForm>
+                                            {{role.roleName}}
+                                        </mat-checkbox>
+                                    </fieldset>
+                                </div>
+                            </div>
+
+                            <div class="row mt-5">
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary mr-3 px-4" [disabled]="!submittableRoles" (click)="editUserRoles()">Edit</button>
+                                    <button type="button" class="btn btn-outline-primary px-4" [routerLink]="'/management'">Back</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

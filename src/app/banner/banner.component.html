@@ -1,0 +1,5 @@
+    <app-header></app-header>
+
+<app-add-banner *ngIf="add" (added)="onAdded($event)"></app-add-banner>
+
+<app-list-banner *ngIf="view"></app-list-banner>
